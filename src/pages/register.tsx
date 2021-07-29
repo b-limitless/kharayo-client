@@ -20,7 +20,6 @@ const btnStyle = {
 }
 
 
-
 const Register: React.FC<registerProps> = ({ }) => {
    const [, register] = useRegisterMutation();
     return (
