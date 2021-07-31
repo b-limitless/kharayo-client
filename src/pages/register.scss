@@ -1,0 +1,11 @@
+.chakra-form__error-message {
+    color: red;
+    
+    &:before {
+        border: 1px solid red;
+    }
+}
+
+.chakra-form__error-message ~ input {
+    border-color: red;
+}
