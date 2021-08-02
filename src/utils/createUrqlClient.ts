@@ -1,3 +1,6 @@
+// This page help to call all mutation, query, etch can be 
+// Called from different component such as register, login, post etc 
+
 import { dedupExchange, fetchExchange } from "@urql/core";
 import { LoginMutation, LogoutMutation, MeDocument, MeQuery, RegisterMutation } from 'generated/graphql';
 import { betterUpdateQuery } from "pages/betterUpdateQuery";
