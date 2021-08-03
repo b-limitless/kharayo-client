@@ -25,53 +25,52 @@ const btnStyle = {
 
 
 const Login: React.FC<loginProps> = ({ }) => {
-   const router = useRouter();
-   const [, login] = useLoginMutation();
+    const router = useRouter();
+    const [, login] = useLoginMutation();
     return (
         <Wrapper variant="small">
             <Formik
-                initialValues={{
-                    username: "",
-                    password: ""
-                }}
-                onSubmit={async(values, {setErrors}) => {
-                   const response =  await login({options: values});
-                   if(response.data?.login.errors) {
-                    setErrors(toErrorMap(response.data.login.errors));
-                   } else if (response.data?.login.user) {
-                     router.push('/');
-                   }
+                initialValues={
+                    { usernameOrEmail: "", password: "" }
+                }
+                onSubmit={async (values, { setErrors }) => {
+                    const response = await login(values);
+                    if (response.data?.login.errors) {
+                        setErrors(toErrorMap(response.data.login.errors));
+                    } else if (response.data?.login.user) {
+                        router.push('/');
+                    }
                 }}
             >
-                {({isSubmitting}) => (
+                {({ isSubmitting }) => (
                     <Form>
-                         <Box mt = {4}>
-                         <InputField
-                            name="username"
-                            placeholder="username"
-                            label="Username"
-                        />
+                        <Box mt={4}>
+                            <InputField
+                                name="usernameOrEmail"
+                                placeholder="username or email"
+                                label="Username or Email"
+                            />
                         </Box>
-                       
-                       <Box mt = {4}>
-                       <InputField
-                            name="password"
-                            placeholder="password"
-                            label="Password"
-                            type="password"
-                        />
-                       </Box>
-                       <Box mt = {2}>
-                       <Button 
-                         style = {btnStyle} 
-                         mt = {4} 
-                         type = "submit" 
-                         isLoading = {isSubmitting}
-                         >
-                          Login
-                        </Button>
-                       </Box>
-                        
+
+                        <Box mt={4}>
+                            <InputField
+                                name="password"
+                                placeholder="password"
+                                label="Password"
+                                type="password"
+                            />
+                        </Box>
+                        <Box mt={2}>
+                            <Button
+                                style={btnStyle}
+                                mt={4}
+                                type="submit"
+                                isLoading={isSubmitting}
+                            >
+                                Login
+                            </Button>
+                        </Box>
+
                     </Form>
                 )}
             </Formik>
