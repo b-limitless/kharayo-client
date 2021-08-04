@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, Form } from 'formik';
-import InputField from '../components/inputField';
-import Wrapper from '../components/wrapper';
+import InputField from 'components/inputField';
+import Wrapper from 'components/wrapper';
 import { Box } from "@chakra-ui/core";
 import { Button } from '@chakra-ui/react';
 import { useLoginMutation } from '../generated/graphql';
@@ -12,7 +12,7 @@ import { createUrqlClient } from 'utils/createUrqlClient';
 interface loginProps {
 }
 
-const btnStyle = {
+export const btnStyle = {
     backgroundColor: 'rgba(0,118,255,0.9)',
     border: '1px solid rgba(0,118,255,0.9)',
     color: '#fff',
