@@ -3,7 +3,7 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import InputField from 'components/inputField';
 import Wrapper from 'components/wrapper';
-import { Box } from "@chakra-ui/core";
+import { Box, Link } from "@chakra-ui/core";
 import { Button } from '@chakra-ui/react';
 import { toErrorMap } from 'utils/toErrorMap';
 import { btnStyle } from 'pages/login';
@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from 'utils/createUrqlClient';
+import NextLink from 'next/link';
 
 const ChagePassword: NextPage<{token: string}> = ({token}) => {
     const router = useRouter();
@@ -49,7 +50,14 @@ const ChagePassword: NextPage<{token: string}> = ({token}) => {
                             label="new password"
                         />
                     </Box>
-                    <Box color = "red">{tokenError && tokenError}</Box>
+                    {tokenError ? 
+                        <><Box color = "red">{tokenError} </Box>
+                        <NextLink href = "/forgot-password"><Link>
+                            Request Reset Password
+                        </Link></NextLink></>
+                    : <></>}
+                    
+                   
 
                     <Box mt={2}>
                         <Button
