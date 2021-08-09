@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState } from 'react'
 import { Formik, Form } from 'formik';
 import InputField from 'components/inputField';
 import Wrapper from 'components/wrapper';
@@ -9,24 +9,23 @@ import { useRouter } from 'next/router'
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from 'utils/createUrqlClient';
 import { btnStyle } from 'pages/login';
+import { useForgotPasswordMutation } from 'generated/graphql';
 
 
 const ForgotPassword: React.FC = ({}) => {
+        const [complete, setComplete] = useState<boolean>(false);
+        const [, forgotPassword] = useForgotPasswordMutation();
         return (<Wrapper variant="small">
         <Formik
             initialValues={
-                { usernameOrEmail: "", password: "" }
+                { email: "" }
             }
-            onSubmit={async (values, { setErrors }) => {
-                // const response = await login(values);
-                // if (response.data?.login.errors) {
-                //     setErrors(toErrorMap(response.data.login.errors));
-                // } else if (response.data?.login.user) {
-                //     router.push('/');
-                // }
+            onSubmit={async (values) => {
+              await forgotPassword(values);
+              setComplete(true);
             }}
         >
-            {({ isSubmitting }) => (
+            {({ isSubmitting }) =>  complete ? <Box color = "green">An email has been sent to you</Box> : (
                 <Form>
                     <Box mt={4}>
                         <InputField

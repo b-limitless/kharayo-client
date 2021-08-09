@@ -5,11 +5,12 @@ import {
     FormErrorMessage,
 } from "@chakra-ui/react"
 import { useField } from "formik";
-import { Input } from "@chakra-ui/core";
+import { Input, Textarea } from "@chakra-ui/core";
 
 type inputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
     name: string;
     label: string;
+    textare?:boolean;
 };
 
 const style = {
@@ -18,12 +19,17 @@ const style = {
     height: '38px',
 }
 
-const InputField: React.FC<inputFieldProps> = ({label, size:_, ...props}) => {
-    const [field, { error }] = useField(props)
+const InputField: React.FC<inputFieldProps> = ({label, textare, size:_, ...props}) => {
+    let InputOrTextArea = Input;
+    if(textare) {
+        InputOrTextArea = Textarea;
+    }
+    const [field, { error }] = useField(props);
+
     return (
         <FormControl isInvalid={!!error}>
             <FormLabel htmlFor= {field.name}>{label}</FormLabel>
-            <Input {...props} {...field} id={field.name} placeholder= {props.placeholder} style = {style} />
+            <InputOrTextArea {...props} {...field} id={field.name} placeholder= {props.placeholder} style = {style} />
             {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
         </FormControl>
     );
