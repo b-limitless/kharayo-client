@@ -1,11 +1,13 @@
-import React from 'react'
-import { Box } from '@chakra-ui/react';
+import React from "react"
+import { Box } from "@chakra-ui/react";
+
+export type WrapperVariant = "small" | "regular";
 
 interface wrapperProps {
-    variant?: 'small' | 'regular'
+    variant?: WrapperVariant
 }
 
-const Wrapper: React.FC<wrapperProps> = ({ children, variant = 'regular' }) => {
+const Wrapper: React.FC<wrapperProps> = ({ children, variant = "regular" }) => {
     return (
         <Box  
          maxW={variant === "regular" ? "800px" : "400px"} 
