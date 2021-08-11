@@ -1,11 +1,33 @@
-// This page help to call all mutation, query, etch can be 
-// Called from different component such as register, login, post etc 
+// This page help to call all mutation, query, etch can be
+// Called from different component such as register, login, post etc
 
 import { dedupExchange, fetchExchange } from "@urql/core";
-import { LoginMutation, LogoutMutation, MeDocument, MeQuery, RegisterMutation } from 'generated/graphql';
+import {
+  LoginMutation,
+  LogoutMutation,
+  MeDocument,
+  MeQuery,
+  RegisterMutation,
+} from "generated/graphql";
 import { betterUpdateQuery } from "pages/betterUpdateQuery";
-import { cacheExchange } from '@urql/exchange-graphcache';
+import { cacheExchange } from "@urql/exchange-graphcache";
+import { pipe, tap } from "wonka";
+import { Exchange } from "urql";
+import router from "next/router";
 
+export const errorExchange: Exchange =
+  ({ forward }) =>
+  (ops$) => {
+    return pipe(
+      forward(ops$),
+      tap(({ error }) => {
+        // If the OperationResult has an error send a request to sentry
+        if (error?.message.includes("not authenticated")) {
+          router.replace("/login")
+        }
+      })
+    );
+  };
 
 export const createUrqlClient = (ssrExchange: any) => ({
   url: "http://localhost:4000/graphql",
@@ -61,6 +83,7 @@ export const createUrqlClient = (ssrExchange: any) => ({
         },
       },
     }),
+    errorExchange,
     fetchExchange,
   ],
   ssrExchange,
