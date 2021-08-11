@@ -29,6 +29,7 @@ export const btnStyle = {
 const Login: React.FC<loginProps> = ({ }) => {
     const router = useRouter();
     const [, login] = useLoginMutation();
+    console.log(router)
     return (
         <Wrapper variant="small">
             <Formik
@@ -40,7 +41,12 @@ const Login: React.FC<loginProps> = ({ }) => {
                     if (response.data?.login.errors) {
                         setErrors(toErrorMap(response.data.login.errors));
                     } else if (response.data?.login.user) {
-                        router.push('/');
+                        if(typeof router.query.next === 'string') {
+                            router.push(router.query.next);
+                        } else {
+                            router.push('/');
+                        }   
+                        
                     }
                 }}
             >
