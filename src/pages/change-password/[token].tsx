@@ -14,10 +14,12 @@ import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from 'utils/createUrqlClient';
 import NextLink from 'next/link';
 
-const ChagePassword: NextPage<{token: string}> = ({token}) => {
+const ChagePassword: NextPage<{token: string}> = () => {
     const router = useRouter();
     const [, changePassword] = useChangePasswordMutation();
     const [tokenError, setTokenError] = useState("");
+    const token = typeof router.query.token === "string" ? router.query.token :  "";
+
     return (<Wrapper variant="small">
         <Formik
             initialValues={
@@ -76,11 +78,11 @@ const ChagePassword: NextPage<{token: string}> = ({token}) => {
     </Wrapper>);
 }
 
-ChagePassword.getInitialProps = ({ query }) => {
-    return {
-        token: query.token as string,
-    }
-}
+// ChagePassword.getInitialProps = ({ query }) => {
+//     return {
+//         token: query.token as string,
+//     }
+// }
 
 
 export default withUrqlClient(createUrqlClient, {ssr:false})(ChagePassword);
